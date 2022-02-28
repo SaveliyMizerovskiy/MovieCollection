@@ -175,19 +175,23 @@ public class MovieCollection
 
     ArrayList<String> allActors = new ArrayList<String>();
     for (int i = 0; i < movies.size(); i++) {
-      String[] currentMovieCast = movies.get(i).getCast().split("|");
+      String[] currentMovieCast = movies.get(i).getCast().split("\\|");
       for (int j = 0; j < currentMovieCast.length; j++) {
         if (allActors.indexOf(currentMovieCast[j]) == -1){
           allActors.add(currentMovieCast[j]);
-          System.out.println(currentMovieCast[j]);
+          //System.out.println(currentMovieCast[j]);
         }
       }
     }
+    //System.out.println(allActors);
     for (String actor: allActors){
       if(actor.toLowerCase().indexOf(searchTerm) != -1){
         results.add(actor);
       }
     }
+     sortAZ(results);
+
+
 
 
     // now, display them all to the user
@@ -199,8 +203,28 @@ public class MovieCollection
 
       System.out.println("" + choiceNum + ". " + results.get(i));
     }
-    System.out.println(results.size());
-    System.out.println(allActors.size());
+    System.out.println("Select an actor:");
+    String actorName = results.get(scanner.nextInt());
+
+
+  }
+
+  private void sortAZ(ArrayList<String> listToSort){
+    String current = "";
+    int beforeInt = 0;
+    String removed = "";
+    for (int i = 0; i < listToSort.size(); i++){
+        current = listToSort.get(i);
+      for (int j = i; j < listToSort.size(); j++) {
+        if (current.compareTo(listToSort.get(j)) > 0){
+          current = listToSort.get(j);
+          beforeInt = j;
+        }
+      }
+      removed = listToSort.get(i);
+      listToSort.set(i, current);
+      listToSort.set(beforeInt, removed);
+    }
   }
 
   private void searchKeywords()
