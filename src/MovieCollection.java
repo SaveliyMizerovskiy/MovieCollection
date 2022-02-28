@@ -147,6 +147,7 @@ public class MovieCollection
       listToSort.set(possibleIndex, temp);
     }
   }
+
   
   private void displayMovieInfo(Movie movie)
   {
@@ -165,6 +166,41 @@ public class MovieCollection
   private void searchCast()
   {
     /* TASK 4: IMPLEMENT ME! */
+    System.out.print("Enter a name(last or first): ");
+    String searchTerm = scanner.nextLine();
+
+    // prevent case sensitivity
+    searchTerm = searchTerm.toLowerCase();
+    ArrayList<String> results = new ArrayList<String>();
+
+    ArrayList<String> allActors = new ArrayList<String>();
+    for (int i = 0; i < movies.size(); i++) {
+      String[] currentMovieCast = movies.get(i).getCast().split("|");
+      for (int j = 0; j < currentMovieCast.length; j++) {
+        if (allActors.indexOf(currentMovieCast[j]) == -1){
+          allActors.add(currentMovieCast[j]);
+          System.out.println(currentMovieCast[j]);
+        }
+      }
+    }
+    for (String actor: allActors){
+      if(actor.toLowerCase().indexOf(searchTerm) != -1){
+        results.add(actor);
+      }
+    }
+
+
+    // now, display them all to the user
+    for (int i = 0; i < results.size(); i++)
+    {
+
+      // this will print index 0 as choice 1 in the results list; better for user!
+      int choiceNum = i + 1;
+
+      System.out.println("" + choiceNum + ". " + results.get(i));
+    }
+    System.out.println(results.size());
+    System.out.println(allActors.size());
   }
 
   private void searchKeywords()
